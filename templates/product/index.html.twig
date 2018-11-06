@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Productos con stock</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Stock</th>
+                            <th>Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-hover">
+                        {% for product in products %}
+                            <tr>
+                                <td>
+                                    <p>{{ product.name }}</p>
+                                    <p>
+                                        <button type="button" name="button" class="btn btn-primary" onclick="addProductCart('{{ url('cart_add_product', {id: product.id}) }}')">agregar a carrito</button>
+                                    </p>
+                                </td>
+                                <td>{{ product.stock }}</td>
+                                <td>
+                                    <img src="{{ asset('products/' ~ product.image) }}" alt="{{ product.name }}" height="124">
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">
+                                    no records found
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex flex-column">
+                <div class="pb-3">
+                    <h1>
+                        Carrito <span class="badge badge-primary" id="cart_count">
+                            {{ app.session.get('cart') | length }}</span>
+                        </h1>
+                </div>
+                <div class="pb-3">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" value="mmatamala1982@gmail.com" aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">Ingrese una dirección correo para recibir un correo</small>
+                    </div>
+                    <button type="button" onclick="sentEmail()" class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="message">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Mensaje enviado</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Su mensaje fue enviado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function sentEmail()
+        {
+            $('div.loading').removeClass('sr-only');
+
+            var address = $('input[type=email]').val()
+            console.log(address)
+
+            $.post('{{ url('email') }}', {address: address}, function(data){
+                $('#message').modal('show')
+            }).done(function(){
+                $('div.loading').addClass('sr-only');
+            })
+        }
+
+        function addProductCart(url) {
+            $('div.loading').removeClass('sr-only');
+
+            $.post(url, function(data){
+                $('#cart_count').html(data.length)
+            }).done(function(){
+                $('div.loading').addClass('sr-only');
+            })
+        }
+    </script>
+{% endblock %}
