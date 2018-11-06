@@ -1,1 +1,32 @@
-@import '~bootstrap/scss/bootstrap'
+// $blue:    #007bff !default;
+// $indigo:  #6610f2 !default;
+// $purple:  #6f42c1 !default;
+// $pink:    #e83e8c !default;
+// $red:     #dc3545 !default;
+// $orange:  #fd7e14 !default;
+// $yellow:  #ffc107 !default;
+// $green:   #28a745 !default;
+// $teal:    #20c997 !default;
+// $cyan:    #17a2b8 !default;
+
+$blue:    rgba(0, 123, 255, 1) !default;
+$indigo:  rgba(102, 16, 242, 1) !default;
+$purple:  rgba(111, 66, 193, 1) !default;
+$pink:    rgba(232, 62, 140, 1) !default;
+$red:     rgba(220, 53, 69, 1) !default;
+$orange:  rgba(253, 126, 20, 1) !default;
+$yellow:  rgba(255, 193, 7, 1) !default;
+$green:   rgba(40, 167, 69, 1) !default;
+$teal:    rgba(32, 201, 151, 1) !default;
+$cyan:    rgba(23, 162, 184, 1) !default;
+
+@import '~bootstrap/scss/bootstrap';
+
+body {
+  padding-top: 5rem;
+}
+
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
