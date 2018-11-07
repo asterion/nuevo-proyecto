@@ -85,7 +85,11 @@
             console.log(address)
 
             $.post('{{ url('email') }}', {address: address}, function(data){
-                $('#message').modal('show')
+                if (data.error == 'true') {
+                    alert('Se produjo un error: ' + data.message)
+                } else {
+                    $('#message').modal('show')
+                }
             }).done(function(){
                 $('div.loading').addClass('sr-only');
             })
